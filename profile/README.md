@@ -1,125 +1,166 @@
-🚀 프로젝트 로컬 환경 세팅 가이드
-진행 환경: VS Code 터미널 (Command Prompt 기준)
+# 🚀 프로젝트 로컬 환경 세팅 가이드
+> **진행 환경**: VS Code 터미널 (Command Prompt 기준)
 
-🎨 1. 프론트엔드 (Frontend)
-레포지토리 클론
+<br>
 
-Bash
-git clone https://github.com/Team-2-Final/Frontend.git
-패키지 설치
-VS Code 터미널에서 설치 경로로 이동 후 아래 명령어를 실행합니다.
+## 🎨 1. 프론트엔드 (Frontend)
 
-Bash
-npm install
-작업 폴더로 이동
+1. **레포지토리 클론**
+   ```bash
+   git clone [https://github.com/Team-2-Final/Frontend.git](https://github.com/Team-2-Final/Frontend.git)
+   ```
+2. **패키지 설치**
+   VS Code 터미널에서 설치 경로로 이동 후 아래 명령어를 실행합니다.
+   ```bash
+   npm install
+   ```
+3. **작업 폴더로 이동**
+   ```bash
+   cd frontend
+   ```
+4. **프로젝트 실행**
+   ```bash
+   npm start
+   ```
+   > 💡 **Tip:** 실행이 안 될 경우, `npm start`를 입력했던 경로에서 `npm install`을 다시 실행해 보세요.
 
-Bash
-cd frontend
-프로젝트 실행
+<br>
 
-Bash
-npm start
-💡 Tip: 실행이 안 될 경우, npm start를 입력했던 경로에서 npm install을 다시 실행해 보세요.
+## ⚙️ 2. 백엔드 (Backend)
 
-⚙️ 2. 백엔드 (Backend)
-레포지토리 클론
+1. **레포지토리 클론**
+   ```bash
+   git clone [https://github.com/Team-2-Final/Backend.git](https://github.com/Team-2-Final/Backend.git)
+   ```
+2. **가상환경 생성 및 실행**
+   VS Code 터미널에서 백엔드 설치 경로로 이동 후 가상환경을 세팅합니다.
+   ```bash
+   python -m venv .venv
+   .venv\scripts\activate.bat
+   ```
+3. **요구 패키지 설치**
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. **FastAPI 서버 실행**
+   ```bash
+   uvicorn app.main:app --reload
+   ```
+   * 🔗 **Swagger UI 주소**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-Bash
-git clone https://github.com/Team-2-Final/Backend.git
-가상환경 생성 및 실행
-VS Code 터미널에서 백엔드 설치 경로로 이동 후 가상환경을 세팅합니다.
+<br>
 
-Bash
-python -m venv .venv
-.venv\scripts\activate.bat
-요구 패키지 설치
+## 🗄️ 3. 데이터베이스 (Oracle DB)
 
-Bash
-pip install -r requirements.txt
-FastAPI 서버 실행
+### 📥 오라클 설치
+* **버전**: Oracle Database 21c Express Edition for Windows (64-bit)
+* **다운로드 링크**: [Oracle 공식 홈페이지](https://www.oracle.com/kr/database/technologies/xe-downloads.html)
 
-Bash
-uvicorn app.main:app --reload
-🔗 Swagger UI 주소: http://localhost:8000/docs
-
-🗄️ 3. 데이터베이스 (Oracle DB)
-📥 오라클 설치
-버전: Oracle Database 21c Express Edition for Windows (64-bit)
-
-다운로드 링크: Oracle 공식 홈페이지
-
-👤 계정 및 권한 설정
+### 👤 계정 및 권한 설정
 CMD 창을 열고 아래 순서대로 명령어를 실행합니다.
 
-설치 및 접속 확인 (1234는 설치 시 설정한 비밀번호)
+1. **설치 및 접속 확인** *(1234는 설치 시 설정한 비밀번호)*
+   ```bash
+   sqlplus system/1234@localhost:1521/XEPDB1
+   ```
+2. **계정 생성 및 권한 부여** (SQL 쉘 내부에서 실행)
+   ```sql
+   -- 계정 생성
+   CREATE USER smart1234 IDENTIFIED BY farm1234;
 
-Bash
-sqlplus system/1234@localhost:1521/XEPDB1
-계정 생성 및 권한 부여 (SQL 쉘 내부에서 실행)
+   -- 기본 권한 부여
+   GRANT CONNECT, RESOURCE TO smart1234;
 
-SQL
--- 계정 생성
-CREATE USER smart1234 IDENTIFIED BY farm1234;
+   -- 테이블스페이스 사용 권한 부여
+   ALTER USER smart1234 QUOTA UNLIMITED ON USERS;
 
--- 기본 권한 부여
-GRANT CONNECT, RESOURCE TO smart1234;
+   -- 생성 확인 (smart1234가 출력되면 성공)
+   SELECT username FROM dba_users;
+   ```
 
--- 테이블스페이스 사용 권한 부여
-ALTER USER smart1234 QUOTA UNLIMITED ON USERS;
-
--- 생성 확인 (smart1234가 출력되면 성공)
-SELECT username FROM dba_users;
-🛠️ DB 테이블 초기화
+### 🛠️ DB 테이블 초기화
 프로젝트 루트 경로에서 아래 스크립트를 실행하여 테이블을 세팅합니다.
-
-Bash
+```bash
 # 테이블 초기 생성
 sqlplus smart1234/farm1234@localhost:1521/XEPDB1 @app/db_init_.sql
 
 # 문제 발생 시 테이블 리셋
 sqlplus smart1234/farm1234@localhost:1521/XEPDB1 @app/db_reset.sql
-🤖 4. 머신러닝 (ML / AI)
-🧠 AI 모델 1
-레포지토리 클론
+```
 
-Bash
-git clone https://github.com/Team-2-Final/ML.git
-가상환경 종료 (터미널 경로 앞에 .venv가 표시된 경우)
+<br>
 
-Bash
-deactivate
-요구 패키지 설치 및 실행
+## 🤖 4. 머신러닝 (ML / AI)
 
-Bash
-pip install -r requirements-api.txt
-python -m serving
-💡 Tip: 실행이 안 될 경우, requirements-ml.txt, requirements-dev.txt 등 다른 requirements 파일도 모두 설치해 본 후 다시 실행해 보세요.
+### 🧠 AI 모델 1
+1. **레포지토리 클론**
+   ```bash
+   git clone [https://github.com/Team-2-Final/ML.git](https://github.com/Team-2-Final/ML.git)
+   ```
+2. **가상환경 종료** *(터미널 경로 앞에 `.venv`가 표시된 경우)*
+   ```bash
+   deactivate
+   ```
+3. **요구 패키지 설치 및 실행**
+   ```bash
+   pip install -r requirements-api.txt
+   python -m serving
+   ```
+   > 💡 **Tip:** 실행이 안 될 경우, `requirements-ml.txt`, `requirements-dev.txt` 등 다른 requirements 파일도 모두 설치해 본 후 다시 실행해 보세요.
 
-🧠 AI 모델 2
-레포지토리 클론 및 브랜치 전환
+### 🧠 AI 모델 2
+1. **레포지토리 클론 및 브랜치 전환**
+   ```bash
+   git clone [https://github.com/Team-2-Final/ML.git](https://github.com/Team-2-Final/ML.git)
+   git checkout other
+   ```
+2. **가상환경 종료** *(터미널 경로 앞에 `.venv`가 표시된 경우)*
+   ```bash
+   deactivate
+   ```
+3. **요구 패키지 설치 및 실행**
+   ```bash
+   pip install -r requirements.txt
+   python run.py
+   ```
 
-Bash
-git clone https://github.com/Team-2-Final/ML.git
-git checkout other
-가상환경 종료 (터미널 경로 앞에 .venv가 표시된 경우)
+<br>
 
-Bash
-deactivate
-요구 패키지 설치 및 실행
+## 🕹️ 5. 시뮬레이터 실행 (Simulator)
 
-Bash
-pip install -r requirements.txt
-python run.py
-🕹️ 5. 시뮬레이터 실행 (Simulator)
-각 시뮬레이터는 백엔드 파일 내부의 해당 폴더로 이동(cd)한 후 실행합니다.
+각 시뮬레이터는 백엔드 파일 내부의 해당 폴더로 이동(`cd`)한 후 실행합니다.
 
-일반 시뮬레이터 실행
+* **일반 시뮬레이터 실행**
+  ```bash
+  cd simulator
+  python simulator1.py
+  ```
 
-Bash
-cd simulator
-python simulator1.py
-이미지(CCTV) 시뮬레이터 실행
+* **이미지(CCTV) 시뮬레이터 실행**
+  ```bash
+  cd cctv_simulator
+  python cctv_simulator.py
+  ```
 
-Bash
-cd cctv_simulator
-python cctv_simulator.py
+<br>
+
+---
+
+## 🎁 Bonus: 원클릭 자동 실행 세팅 (팀원 배포용)
+최초 세팅이 끝난 후, 매번 터미널을 여러 개 열어 실행하기 귀찮다면 이 방법을 사용하세요!
+
+1. 최상위 작업 폴더(Frontend와 Backend 폴더가 모여있는 곳)에 **`start_all.bat`** 이라는 이름의 새 텍스트 파일을 만듭니다.
+2. 파일 안에 아래 코드를 복사해서 붙여넣고 저장합니다.
+   ```bat
+   @echo off
+   echo 🚀 Team-2-Final 서버 자동 실행을 시작합니다...
+
+   echo [1] 백엔드 서버(FastAPI) 부팅 중...
+   start "Backend Server" cmd /k "cd Backend && call .venv\scripts\activate.bat && uvicorn app.main:app --reload"
+
+   echo [2] 프론트엔드 서버 부팅 중...
+   start "Frontend Server" cmd /k "cd Frontend\frontend && npm start"
+
+   echo ✅ 서버 실행 완료! 새로 뜬 터미널 창들을 확인해 주세요.
+   ```
+3. 이제 개발을 시작할 때마다 **`start_all.bat`** 파일만 더블 클릭하면 프론트엔드와 백엔드가 각각의 새 터미널 창에서 동시에 실행됩니다! 🎉
