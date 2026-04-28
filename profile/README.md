@@ -64,14 +64,16 @@ sqlplus smart1234/farm1234@localhost:1521/XEPDB1 @app/db_reset.sql
 
 ml ai1
 1. 깃에서 git clone (https://github.com/Team-2-Final/ML.git)
-2. 설치 경로에서 pip install -r requirements-api.txt
-3. python -m serving
+2. venv 환경 내일 경우(앞에 .venv표시된 상태) deactivate로 해당 환경에서 나감
+3. 설치 경로에서 pip install -r requirements-api.txt
+4. python -m serving
    안될 시 2번 과정의 requirements라 이름 붙은 ml, dev 다 설치해보고 다시 실행
 
 ml2 ai2
 1. 깃에서 git clone (https://github.com/Team-2-Final/ML.git) + git checkout other 명령으로 ai2로 전환
-2. 설치 경로에서 pip install -r requirements.txt
-3. python run.py
+2. venv 환경 내일 경우(앞에 .venv표시된 상태) deactivate로 해당 환경에서 나감
+3. 설치 경로에서 pip install -r requirements.txt
+4. python run.py
 
 
 
