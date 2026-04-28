@@ -141,26 +141,3 @@ sqlplus smart1234/farm1234@localhost:1521/XEPDB1 @app/db_reset.sql
   cd cctv_simulator
   python cctv_simulator.py
   ```
-
-<br>
-
----
-
-## 🎁 Bonus: 원클릭 자동 실행 세팅 (팀원 배포용)
-최초 세팅이 끝난 후, 매번 터미널을 여러 개 열어 실행하기 귀찮다면 이 방법을 사용하세요!
-
-1. 최상위 작업 폴더(Frontend와 Backend 폴더가 모여있는 곳)에 **`start_all.bat`** 이라는 이름의 새 텍스트 파일을 만듭니다.
-2. 파일 안에 아래 코드를 복사해서 붙여넣고 저장합니다.
-   ```bat
-   @echo off
-   echo 🚀 Team-2-Final 서버 자동 실행을 시작합니다...
-
-   echo [1] 백엔드 서버(FastAPI) 부팅 중...
-   start "Backend Server" cmd /k "cd Backend && call .venv\scripts\activate.bat && uvicorn app.main:app --reload"
-
-   echo [2] 프론트엔드 서버 부팅 중...
-   start "Frontend Server" cmd /k "cd Frontend\frontend && npm start"
-
-   echo ✅ 서버 실행 완료! 새로 뜬 터미널 창들을 확인해 주세요.
-   ```
-3. 이제 개발을 시작할 때마다 **`start_all.bat`** 파일만 더블 클릭하면 프론트엔드와 백엔드가 각각의 새 터미널 창에서 동시에 실행됩니다! 🎉
